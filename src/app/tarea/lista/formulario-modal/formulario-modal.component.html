@@ -1,0 +1,87 @@
+<div class="card ">
+    <div class="card-header  text-light ">
+        <mat-icon>info</mat-icon> IMPORTANTE
+    </div>
+    <form (submit)="procesar()" [formGroup]="registerForm">
+        <div class="card-body">
+
+            <div class="titulo" *ngIf="this.validPrevired == 'true' || this.validAfc == 'true'">
+                <h5>Sabemos que esto es lo que ud necesita por eso queremos hacerlo mas fácil</h5>
+            </div>
+            <div class="titulo" *ngIf="this.validPrevired == 'false' && this.validAfc == 'false'">
+                <h5>No hay beneficios registrados para usted </h5>
+            </div>
+
+            <div class="previred-modulo" *ngIf="this.validPrevired == 'true'">
+                <div class="wall">
+
+                    <div class="texto">
+                        <p class="">{{PreviredMensaje}}</p>
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+
+
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" formControlName="checkPrevired" (click)="refreshNumDoc()">
+                        <label class="form-check-label" for="flexCheckDefault">
+                    Acepto las condiciones
+                    </label>
+                    </div>
+
+                    <div class="row " *ngIf="registerForm.get('checkPrevired')?.value ">
+
+                        <div class="row">
+
+                            <div class="col-md-6 rigth form-label-nd">
+                                <label for="formGroupExample">Número documento</label>
+                            </div>
+                            <div class="input-serie col-md-6">
+                                <input type="text" class="form-control" formControlName="textNumDoc" maxlength="10" />
+                            </div>
+
+
+
+                        </div>
+                        <br> <br><br>
+                        <div class="row validations-nd d-flex justify-content-center">
+
+                            <div class="col-md-11 alert alert-warning  " *ngIf="this.registerForm.get('checkPrevired')?.value && get_textNumDoc?.invalid && (get_textNumDoc?.touched)">
+                                <div *ngIf="get_textNumDoc?.hasError('required')"> * No debe estar vacio</div>
+                                <div *ngIf="get_textNumDoc?.hasError('minlength')">* Debe ser superior a 9 caracteres</div>
+                                <div *ngIf="get_textNumDoc?.hasError('maxlength')">* No Debe ser mayor a 10 caracteres</div>
+                                <div *ngIf="get_textNumDoc?.hasError('pattern')">* Debe contener solo números y letras</div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <hr>
+            </div>
+            <div class="previred-modulo" *ngIf="this.validAfc == 'true'">
+                <div class="wall">
+                    <p>{{AfcMensaje}}</p>
+
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" formControlName="checkAfc">
+                        <label class="form-check-label" for="flexCheckDefault">
+                    Acepto las condiciones</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer " align="right">
+            <button type="submit" class="btn text-light" [disabled]="this.registerForm.get('checkPrevired')?.value && get_textNumDoc?.invalid">Siguiente</button>
+
+        </div>
+    </form>
+</div>
